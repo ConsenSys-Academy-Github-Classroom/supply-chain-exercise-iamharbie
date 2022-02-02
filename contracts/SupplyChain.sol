@@ -100,7 +100,7 @@ contract SupplyChain {
         _;
     }
 
-    constructor() public {
+    constructor()  {
         // 1. Set the owner to the transaction sender
         // 2. Initialize the sku count to 0. Question, is this necessary?
         owner = msg.sender;
@@ -133,8 +133,8 @@ contract SupplyChain {
             sku: skuCount,
             price: _price,
             state: State.ForSale,
-            seller: msg.sender,
-            buyer: address(0)
+            seller: payable(msg.sender),
+            buyer: payable(address(0))
         });
 
         skuCount = skuCount + 1;
@@ -161,7 +161,7 @@ contract SupplyChain {
         checkValue(sku)
     {
         items[sku].seller.transfer(items[sku].price);
-        items[sku].buyer = msg.sender;
+        items[sku].buyer = payable(msg.sender);
         items[sku].state = State.Sold;
 
         emit LogSold(sku);
