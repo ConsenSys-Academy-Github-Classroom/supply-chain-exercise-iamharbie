@@ -160,7 +160,7 @@ contract SupplyChain {
         paidEnough(items[sku].price)
         checkValue(sku)
     {
-        bool sent = items[sku].seller.send(items[sku].price);
+        items[sku].seller.transfer(items[sku].price);
         items[sku].buyer = msg.sender;
         items[sku].state = State.Sold;
 
