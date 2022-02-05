@@ -84,8 +84,7 @@ contract SupplyChain {
     // modifier shipped(uint _sku)
     // modifier received(uint _sku)
     modifier forSale(uint sku) {
-        require(items[sku].state == State.ForSale);
-        require(items[sku].price > 0);
+        require(items[sku].state == State.ForSale && items[sku].price != 0);
         _;
     }
     modifier sold(uint sku) {
@@ -139,8 +138,8 @@ contract SupplyChain {
             buyer: payable(address(0))
         });
 
-        skuCount = skuCount + 1;
         emit LogForSale(skuCount);
+        skuCount = skuCount + 1;
         return true;
     }
 
